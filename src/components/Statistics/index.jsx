@@ -81,21 +81,21 @@ const Statistics = () => {
         </Paper>
         <Paper className="p-4 m-2 w-full" elevation={1}>
           <Typography variant="h6">Payment Statistics</Typography>
-          <Paper className="p-2 flex items-center justify-start">
+          <Paper className="p-2 m-2 flex items-center justify-start">
             <BarChart fontSize="large" />
             <div className="m-2">
               <p className="font-bold">total Transactions</p>
               <p className="font-medium text-purple-500 text-2xl">$10,100</p>
             </div>
           </Paper>
-          <Paper className="p-2 flex items-center justify-start">
+          <Paper className="p-2 m-2 flex items-center justify-start">
             <BarChart fontSize="large" />
             <div className="m-2">
               <p className="font-bold">Confirm Order</p>
               <p className="font-medium text-orange-500 text-2xl">$10,100</p>
             </div>
           </Paper>
-          <Paper className="p-2 flex items-center justify-start">
+          <Paper className="p-2 m-2 flex items-center justify-start">
             <BarChart fontSize="large" />
             <div className="m-2">
               <p className="font-bold">Order Receive</p>
