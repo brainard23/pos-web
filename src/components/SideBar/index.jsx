@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 const menu = [
   { title: "Dashboard", path: "/dashboard" },
   { title: "Purchase", path: "/purchase" },
-  { title: "Products", path: "/products" },
+  { title: "Inventory", path: "/inventory" },
   { title: "Transactions", path: "/transactions" },
   { title: "Reports", path: "/reports" },
 ];

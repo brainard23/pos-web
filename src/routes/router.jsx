@@ -15,6 +15,7 @@ const Products = loadable(() => import("../pages/Products/Products"));
 const router = createBrowserRouter([
   {
     element: <Layout />,
+    path: "/",
     children: [
       {
         element: <MainDashboard />,
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         element: <Products />,
-        path: "/products",
+        path: "/inventory",
       },
     ],
   },

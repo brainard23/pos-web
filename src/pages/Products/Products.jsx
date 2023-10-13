@@ -1,8 +1,13 @@
 import React from 'react'
+import InventoryTable from '../../components/InventoryTable'
 
 const Products = () => {
   return (
-    <div>Products</div>
+    <>
+    <div className='bg-red-500 m-4 w-full'>
+        <InventoryTable />
+    </div>
+    </>
   )
 }
 
