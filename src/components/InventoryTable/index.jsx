@@ -136,7 +136,7 @@ const InventoryTable = () => {
   const [orderBy, setOrderBy] = React.useState("brand");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -201,7 +201,7 @@ const InventoryTable = () => {
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
+        <TableContainer style={{ maxHeight: 450, overflowY: "scroll" }}>
           <Table sx={{ width: 1000 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
               numSelected={selected.length}
@@ -261,7 +261,7 @@ const InventoryTable = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[10, 25]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
