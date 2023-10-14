@@ -202,7 +202,7 @@ const InventoryTable = () => {
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer style={{ maxHeight: 450, overflowY: "scroll" }}>
-          <Table sx={{ width: 1000 }} aria-labelledby="tableTitle">
+          <Table sx={{ width: 1150 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
