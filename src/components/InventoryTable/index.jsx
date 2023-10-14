@@ -13,10 +13,12 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import EnhancedTableHead from "../TableHeader";
+import AddIcon from "@mui/icons-material/Add";
 
 function createData(name, brand, stocks, price, total_sale, status) {
   return {
@@ -249,6 +251,18 @@ const InventoryTable = () => {
                     <TableCell align="right">{row.price}</TableCell>
                     <TableCell align="right">{row.total_sale}</TableCell>
                     <TableCell align="right">{row.status}</TableCell>
+                    <TableCell align="right">
+                    <Tooltip title="Restock">
+                      <IconButton>
+                        <AddIcon />
+                      </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Edit Product">
+                      <IconButton>
+                        <EditIcon />
+                      </IconButton>
+                      </Tooltip>
+                    </TableCell>
                   </TableRow>
                 );
               })}

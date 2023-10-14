@@ -9,9 +9,11 @@ const Products = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [data, setData] = React.useState("Not Found");
-  const [scanResult, setScanResult] = React.useState(null);
-  const [manualSerialNumber, setManualSerialNumber] = React.useState("");
+  const [data, setData] = React.useState(null);
+
+  const getData = (data) => {
+    setData(data);
+  };
 
   function ProductModal() {
     const style = {
@@ -25,6 +27,7 @@ const Products = () => {
       boxShadow: 24,
       p: 4,
     };
+
     return (
       <div>
         <Modal
@@ -42,25 +45,62 @@ const Products = () => {
             >
               Add Product
             </Typography>
-            <BarcodeScanner
-              scanResult={scanResult}
-              setScanResul={setScanResult}
-              manualSerialNumber={manualSerialNumber}
-              setManualSerialNumber={setManualSerialNumber}
-            />
-            <TextField
-              id="outlined-basic"
-              label="Barcode"
-              variant="outlined"
-              style={{ marginBottom: 10 }}
-              defaultValue={scanResult}
-            />
-            <TextField
-              id="outlined-basic"
-              label="Name"
-              variant="outlined"
-              style={{ marginBottom: 10 }}
-            />
+            <BarcodeScanner getData={getData} />
+            <div>
+              <TextField
+                id="outlined-basic"
+                label="Barcode"
+                variant="outlined"
+                defaultValue={data}
+                style={{ margin: 10 }}
+              />
+              <TextField
+                id="outlined-basic"
+                label="Name"
+                variant="outlined"
+                style={{ margin: 10 }}
+              />
+              <TextField
+                id="outlined-basic"
+                label="Brand"
+                variant="outlined"
+                style={{ margin: 10 }}
+              />
+            </div>
+            <div>
+              <TextField
+                id="outlined-basic"
+                label="Quantity"
+                variant="outlined"
+                style={{ margin: 10 }}
+              />
+              <TextField
+                id="outlined-basic"
+                label="Category"
+                variant="outlined"
+                style={{ margin: 10 }}
+              />
+              <TextField
+                id="outlined-basic"
+                label="Price"
+                variant="outlined"
+                style={{ margin: 10, width: 100 }}
+              />
+              <TextField
+                id="outlined-basic"
+                label="Selling Price"
+                variant="outlined"
+                style={{ margin: 10, width: 100 }}
+              />
+            </div>
+            <div className="flex justify-end items-center m-2">
+              <Button style={{ margin: 10, color: '#ffffff', backgroundColor: 'red'}}>
+                Cancel
+              </Button>
+              <Button variant="outlined" style={{ margin: 10 }}>
+                Add Product
+              </Button>
+            </div>
           </Box>
         </Modal>
       </div>

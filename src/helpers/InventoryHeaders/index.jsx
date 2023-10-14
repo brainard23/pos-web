@@ -35,4 +35,10 @@ export const InventoryHeaders = [
       disablePadding: false,
       label: "Status",
     },
+    {
+      id: "actions",
+      numeric: true,
+      disablePadding: false,
+      label: "Actions",
+    },
   ];
