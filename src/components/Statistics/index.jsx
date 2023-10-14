@@ -29,7 +29,7 @@ const Statistics = () => {
           style={{ width: 300, height: 150 }}
         >
           <div style={{ width: 200 }}>
-            <Typography className="font-medium">Total orders</Typography>
+            <Typography className="font-medium">Profit</Typography>
             <p className="text-purple-400 font-bold">1200</p>
             <p className="text-green-400">+ 3.2</p>
           </div>
@@ -42,7 +42,7 @@ const Statistics = () => {
           style={{ width: 300, height: 150 }}
         >
           <div style={{ width: 200 }}>
-            <Typography className="font-medium">Total orders</Typography>
+            <Typography className="font-medium">Transactions</Typography>
             <p className="text-purple-400 font-bold">1200</p>
             <p className="text-green-400">+ 3.2</p>
           </div>
@@ -55,7 +55,7 @@ const Statistics = () => {
           style={{ width: 300, height: 150 }}
         >
           <div style={{ width: 200 }}>
-            <Typography className="font-medium">Total orders</Typography>
+            <Typography className="font-medium">Items Sold</Typography>
             <p className="text-purple-400 font-bold">1200</p>
             <p className="text-green-400">+ 3.2</p>
           </div>
@@ -68,7 +68,7 @@ const Statistics = () => {
           style={{ width: 300, height: 150 }}
         >
           <div style={{ width: 200 }}>
-            <Typography className="font-medium">Total orders</Typography>
+            <Typography className="font-medium">Trend Item</Typography>
             <p className="text-purple-400 font-bold">1200</p>
             <p className="text-green-400">+ 3.2</p>
           </div>
@@ -80,26 +80,26 @@ const Statistics = () => {
           <OrdonerAndSalesOverview />
         </Paper>
         <Paper className="p-4 m-2 w-full" elevation={1}>
-          <Typography variant="h6">Payment Statistics</Typography>
+          <Typography variant="h6">Monthly Statistics </Typography>
           <Paper className="p-2 m-2 flex items-center justify-start">
             <BarChart fontSize="large" />
             <div className="m-2">
-              <p className="font-bold">total Transactions</p>
-              <p className="font-medium text-purple-500 text-2xl">$10,100</p>
+              <p className="font-bold">Total Transactions</p>
+              <p className="font-medium text-purple-500 text-2xl">100</p>
             </div>
           </Paper>
           <Paper className="p-2 m-2 flex items-center justify-start">
             <BarChart fontSize="large" />
             <div className="m-2">
-              <p className="font-bold">Confirm Order</p>
+              <p className="font-bold">Total Profit</p>
               <p className="font-medium text-orange-500 text-2xl">$10,100</p>
             </div>
           </Paper>
           <Paper className="p-2 m-2 flex items-center justify-start">
             <BarChart fontSize="large" />
             <div className="m-2">
-              <p className="font-bold">Order Receive</p>
-              <p className="font-medium text-green-500 text-2xl">$10,100</p>
+              <p className="font-bold">Total Items Sold</p>
+              <p className="font-medium text-green-500 text-2xl">10,100</p>
             </div>
           </Paper>
         </Paper>
