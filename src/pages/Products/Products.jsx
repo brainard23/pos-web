@@ -1,19 +1,63 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+
+import apiService from "../../api/axios";
+
 import InventoryTable from "../../components/InventoryTable";
 import Search from "../../components/Search";
 import Container from "../../components/Container";
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import BarcodeScanner from "../../components/BarcodeScanner";
 
 const Products = () => {
+  const {
+    trigger,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [barcode, setBarcode] = React.useState(null);
   const [data, setData] = React.useState(null);
+  const [products, setProducts] = React.useState(null);
+  const [error, setError] = React.useState(false);
+  const [brand, setBrand] = React.useState(null);
 
-  const getData = (data) => {
-    setData(data);
+  const getData = (barcode) => {
+    setBarcode(barcode);
   };
+
+  const getProducts = async () => {
+    // setApiLoading(true);
+    try {
+      // setApiLoading(false);
+      const data = await apiService.post("/products");
+      const brand = await apiService.get("/brands");
+      setBrand(brand?.data)
+      setProducts(data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const onSubmit = (data) => {
+    data.Barcode = barcode;
+    console.log(data);
+  };
+
+  useEffect(() => {
+    if (barcode) {
+      // Trigger validation check if barcode has a value
+      trigger("Barcode");
+    }
+  }, [barcode]);
 
   function ProductModal() {
     const style = {
@@ -27,7 +71,7 @@ const Products = () => {
       boxShadow: 24,
       p: 4,
     };
-
+console.log(brand);
     return (
       <div>
         <Modal
@@ -45,62 +89,103 @@ const Products = () => {
             >
               Add Product
             </Typography>
-            <BarcodeScanner getData={getData} />
-            <div>
-              <TextField
-                id="outlined-basic"
-                label="Barcode"
-                variant="outlined"
-                defaultValue={data}
-                style={{ margin: 10 }}
-              />
-              <TextField
-                id="outlined-basic"
-                label="Name"
-                variant="outlined"
-                style={{ margin: 10 }}
-              />
-              <TextField
-                id="outlined-basic"
-                label="Brand"
-                variant="outlined"
-                style={{ margin: 10 }}
-              />
-            </div>
-            <div>
-              <TextField
-                id="outlined-basic"
-                label="Quantity"
-                variant="outlined"
-                style={{ margin: 10 }}
-              />
-              <TextField
-                id="outlined-basic"
-                label="Category"
-                variant="outlined"
-                style={{ margin: 10 }}
-              />
-              <TextField
-                id="outlined-basic"
-                label="Price"
-                variant="outlined"
-                style={{ margin: 10, width: 100 }}
-              />
-              <TextField
-                id="outlined-basic"
-                label="Selling Price"
-                variant="outlined"
-                style={{ margin: 10, width: 100 }}
-              />
-            </div>
-            <div className="flex justify-end items-center m-2">
-              <Button style={{ margin: 10, color: '#ffffff', backgroundColor: 'red'}}>
-                Cancel
-              </Button>
-              <Button variant="outlined" style={{ margin: 10 }}>
-                Add Product
-              </Button>
-            </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="w-full flex justify-center items-center">
+                <div
+                  className="flex justify-center mb-6"
+                  style={{ maxWidth: 200, maxHeight: 200 }}
+                >
+                  <BarcodeScanner getData={getData} />
+                </div>
+              </div>
+
+              <div>
+                <TextField
+                  id="outlined-basic"
+                  label="Barcode"
+                  variant="outlined"
+                  defaultValue={barcode}
+                  style={{ margin: 10 }}
+                />
+                <Controller
+                  name="name"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      label="Name"
+                      variant="outlined"
+                      style={{ margin: 10 }}
+                      {...field}
+                      error={!!errors.name}
+                      helperText={errors.name ? errors.name.message : ""}
+                    />
+                  )}
+                  rules={{
+                    required: "Name is required",
+                  }}
+                />
+                <Controller
+                  name="brand"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      id="outlined-basic"
+                      label="Brand"
+                      variant="outlined"
+                      style={{ margin: 10 }}
+                      {...field}
+                      error={!!errors.name}
+                      helperText={errors.name ? errors.name.message : ""}
+                    />
+                  )}
+                  rules={{
+                    required: "brand is required",
+                  }}
+                />
+              </div>
+              <div>
+                <TextField
+                  id="outlined-basic"
+                  label="Quantity"
+                  variant="outlined"
+                  style={{ margin: 10 }}
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Category"
+                  variant="outlined"
+                  style={{ margin: 10 }}
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Price"
+                  variant="outlined"
+                  style={{ margin: 10, width: 100 }}
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Selling Price"
+                  variant="outlined"
+                  style={{ margin: 10, width: 100 }}
+                />
+              </div>
+              <div className="flex justify-end items-center m-2">
+                <Button
+                  style={{
+                    margin: 10,
+                    color: "#ffffff",
+                    backgroundColor: "red",
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button variant="outlined" style={{ margin: 10 }} type="submit">
+                  Add Product
+                </Button>
+              </div>
+            </form>
           </Box>
         </Modal>
       </div>
