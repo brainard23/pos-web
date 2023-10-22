@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 
-import apiService from "../../api/axios";
-
 import InventoryTable from "../../components/InventoryTable";
 import Search from "../../components/Search";
 import Container from "../../components/Container";
 import BarcodeScanner from "../../components/BarcodeScanner";
+import hooks from "../../hooks/Products";
 
 const Products = () => {
+const { data: products } = hooks.useProductList()
   const {
     trigger,
     control,
@@ -22,30 +22,19 @@ const Products = () => {
   const handleClose = () => setOpen(false);
   const [barcode, setBarcode] = React.useState(null);
   const [data, setData] = React.useState(null);
-  const [products, setProducts] = React.useState(null);
   const [error, setError] = React.useState(false);
-  const [brand, setBrand] = React.useState(null);
 
   const getData = (barcode) => {
     setBarcode(barcode);
   };
+ 
+ useEffect(() => {
+  if (Products) {
+    // setTableData(Products/\);
+  }
+}, [Products]);
 
-  const getProducts = async () => {
-    // setApiLoading(true);
-    try {
-      // setApiLoading(false);
-      const data = await apiService.post("/products");
-      const brand = await apiService.get("/brands");
-      setBrand(brand?.data)
-      setProducts(data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getProducts();
-  }, []);
+console.log(products, 'here');
 
   const onSubmit = (data) => {
     data.Barcode = barcode;
@@ -71,7 +60,7 @@ const Products = () => {
       boxShadow: 24,
       p: 4,
     };
-console.log(brand);
+
     return (
       <div>
         <Modal
