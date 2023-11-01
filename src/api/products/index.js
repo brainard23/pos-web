@@ -11,4 +11,14 @@ export const getProducts = async () => {
   }
 };
 
-
+export const getAddProduct = async (payload) => {
+  try {
+    let req = await apiService.post("/add-product", payload, {
+      Accept: `application/json`,
+      body: JSON.stringify(payload),
+    });
+    return req.data;
+  } catch (err) {
+    throw err;
+  }
+};

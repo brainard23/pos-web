@@ -4,7 +4,8 @@ import { useForm, Controller } from "react-hook-form";
 import { useEffect } from "react";
 import BarcodeScanner from "../BarcodeScanner";
 import { useCallback } from "react";
-
+import TextInput from "../Inputs";
+import hooks from "../../hooks/Products";
 const style = {
   position: "absolute",
   top: "50%",
@@ -15,6 +16,7 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  borderRadius: 2,
 };
 
 const AddProductModal = ({ handleOpen, handleClose, open }) => {
@@ -24,12 +26,14 @@ const AddProductModal = ({ handleOpen, handleClose, open }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { mutate } = hooks.useAddProduct();
   const [barcode, setBarcode] = React.useState(null);
   const [data, setData] = React.useState(null);
 
   const onSubmit = (data) => {
-    data.Barcode = barcode;
+    data.barcode = barcode;
     console.log(data, "here");
+    mutate(data);
   };
 
   const getData = (barcode) => {
@@ -50,6 +54,7 @@ const AddProductModal = ({ handleOpen, handleClose, open }) => {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        style={{ borderRadius: 25 }}
       >
         <Box sx={style}>
           <Typography
@@ -63,84 +68,82 @@ const AddProductModal = ({ handleOpen, handleClose, open }) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="w-full flex justify-center items-center">
               <div
-                className="flex justify-center mb-6"
+                className="flex justify-center mb-6 rounded"
                 style={{ maxWidth: 400, maxHeight: 400 }}
               >
                 <BarcodeScanner getData={getData} />
               </div>
             </div>
 
-            <div>
+            <div className="flex items-center justify-between">
               <TextField
                 id="outlined-basic"
                 label="Barcode"
+                name="barcode"
                 variant="outlined"
                 value={barcode || ""}
                 style={{ margin: 10 }}
                 onChange={(e) => setBarcode(e.target.value)}
               />
-              <Controller
+              <TextInput
                 name="name"
+                label={"Name"}
+                type={"text"}
+                errors={errors}
                 control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <TextField
-                    label="Name"
-                    variant="outlined"
-                    style={{ margin: 10 }}
-                    {...field}
-                    error={!!errors.name}
-                    helperText={errors.name ? errors.name.message : ""}
-                  />
-                )}
-                rules={{
-                  required: "Name is required",
-                }}
+                style={{ margin: 10 }}
               />
-              <Controller
+              <TextInput
                 name="brand"
+                type={"text"}
+                label={"Brand"}
+                errors={errors}
                 control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <TextField
-                    id="outlined-basic"
-                    label="Brand"
-                    variant="outlined"
-                    style={{ margin: 10 }}
-                    {...field}
-                    error={!!errors.name}
-                    helperText={errors.name ? errors.name.message : ""}
-                  />
-                )}
-                rules={{
-                  required: "brand is required",
-                }}
+                style={{ margin: 10 }}
               />
             </div>
-            <div>
-              <TextField
-                id="outlined-basic"
-                label="Quantity"
-                variant="outlined"
+            <div className="flex items-center justify-start">
+              <TextInput
+                name="quantity"
+                type={"number"}
+                label={"Quantity"}
+                errors={errors}
+                control={control}
                 style={{ margin: 10 }}
               />
-              <TextField
-                id="outlined-basic"
-                label="Category"
-                variant="outlined"
+              <TextInput
+                name="category"
+                type={"text"}
+                label={"Category"}
+                errors={errors}
+                control={control}
                 style={{ margin: 10 }}
               />
-              <TextField
-                id="outlined-basic"
-                label="Price"
-                variant="outlined"
-                style={{ margin: 10, width: 100 }}
+              <TextInput
+                name="description"
+                label={"Description"}
+                type={"text"}
+                errors={errors}
+                control={control}
+                style={{ margin: 10 }}
               />
-              <TextField
-                id="outlined-basic"
-                label="Selling Price"
-                variant="outlined"
-                style={{ margin: 10, width: 100 }}
+            </div>
+            <div className="flex items-center justify-start">
+              <TextInput
+                name="price"
+                type={"number"}
+                label={"Price"}
+                errors={errors}
+                control={control}
+                style={{ margin: 10 }}
+              />
+              <TextInput
+                name="selling_price"
+                type={"number"}
+                errors={errors}
+                label={"Selling Price"}
+                control={control}
+                style={{ margin: 10 }}
               />
             </div>
             <div className="flex justify-end items-center m-2">
