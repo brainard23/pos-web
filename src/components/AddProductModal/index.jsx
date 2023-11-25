@@ -3,9 +3,10 @@ import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect } from "react";
 import BarcodeScanner from "../BarcodeScanner";
-import { useCallback } from "react";
 import TextInput from "../Inputs";
 import hooks from "../../hooks/Products";
+import { ANIME } from "@consumet/extensions"
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -46,7 +47,13 @@ const AddProductModal = ({ handleOpen, handleClose, open }) => {
       trigger("Barcode");
     }
   }, [barcode]);
-
+// Create a new instance of the Gogoanime provider
+const gogoanime = new ANIME.Gogoanime();
+// Search for an anime. In this case, "One Piece"
+const results = gogoanime.search("bleach").then(data => {
+  // print results
+  console.log(data, 'here');
+})
   return (
     <div>
       <Modal
@@ -105,7 +112,7 @@ const AddProductModal = ({ handleOpen, handleClose, open }) => {
             <div className="flex items-center justify-start">
               <TextInput
                 name="quantity"
-                type={"number"}
+                type="number"
                 label={"Quantity"}
                 errors={errors}
                 control={control}
@@ -131,7 +138,7 @@ const AddProductModal = ({ handleOpen, handleClose, open }) => {
             <div className="flex items-center justify-start">
               <TextInput
                 name="price"
-                type={"number"}
+                type="number"
                 label={"Price"}
                 errors={errors}
                 control={control}
@@ -139,7 +146,7 @@ const AddProductModal = ({ handleOpen, handleClose, open }) => {
               />
               <TextInput
                 name="selling_price"
-                type={"number"}
+                type="number"
                 errors={errors}
                 label={"Selling Price"}
                 control={control}

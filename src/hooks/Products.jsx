@@ -16,7 +16,6 @@ const useAddProduct = () => {
         "Content-Type": `multipart/form-data`,
         api: true,
       });
-      console.log(response, data, 'here')
       return response.data;
     } catch (e) {
       queryClient.refetchQueries(["get-products"]);
