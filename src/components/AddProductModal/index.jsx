@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import BarcodeScanner from "../BarcodeScanner";
 import TextInput from "../Inputs";
 import hooks from "../../hooks/Products";
-import { ANIME } from "@consumet/extensions"
+import { ANIME } from "@consumet/extensions";
 
 const style = {
   position: "absolute",
@@ -29,11 +29,10 @@ const AddProductModal = ({ handleOpen, handleClose, open }) => {
   } = useForm();
   const { mutate } = hooks.useAddProduct();
   const [barcode, setBarcode] = React.useState(null);
-  const [data, setData] = React.useState(null);
+  const [error, setError] = React.useState(false);
 
   const onSubmit = (data) => {
     data.barcode = barcode;
-    console.log(data, "here");
     mutate(data);
   };
 
@@ -47,13 +46,8 @@ const AddProductModal = ({ handleOpen, handleClose, open }) => {
       trigger("Barcode");
     }
   }, [barcode]);
-// Create a new instance of the Gogoanime provider
-const gogoanime = new ANIME.Gogoanime();
-// Search for an anime. In this case, "One Piece"
-const results = gogoanime.search("bleach").then(data => {
-  // print results
-  console.log(data, 'here');
-})
+  // Create a new instance of the Gogoanime provider
+
   return (
     <div>
       <Modal
@@ -79,6 +73,7 @@ const results = gogoanime.search("bleach").then(data => {
                 style={{ maxWidth: 400, maxHeight: 400 }}
               >
                 <BarcodeScanner getData={getData} />
+                {error && "barcode needed"}
               </div>
             </div>
 
@@ -155,6 +150,7 @@ const results = gogoanime.search("bleach").then(data => {
             </div>
             <div className="flex justify-end items-center m-2">
               <Button
+                onClick={handleClose}
                 style={{
                   margin: 10,
                   color: "#ffffff",

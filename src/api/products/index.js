@@ -17,6 +17,7 @@ export const getAddProduct = async (payload) => {
       Accept: `application/json`,
       body: JSON.stringify(payload),
     });
+    console.log(req)
     return req.data;
   } catch (err) {
     throw err;

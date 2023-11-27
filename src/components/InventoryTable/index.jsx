@@ -20,6 +20,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import EnhancedTableHead from "../TableHeader";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -107,7 +108,8 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-const InventoryTable = (data) => {
+const InventoryTable = (props) => {
+  const { data, isLoading } = props;
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("brand");
   const [selected, setSelected] = React.useState([]);
@@ -122,7 +124,7 @@ const InventoryTable = (data) => {
 
   useEffect(() => {
     if (data) {
-      setProducts(data?.data);
+      setProducts(data);
     }
   }, [data]);
 
@@ -176,7 +178,6 @@ const InventoryTable = (data) => {
       ),
     [order, orderBy, page, rowsPerPage]
   );
-  console.log(visibleRows);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -190,79 +191,78 @@ const InventoryTable = (data) => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={products.length}
+              rowCount={products?.length}
             />
-            <TableBody>
-              {products.map((row, index) => {
-                const isItemSelected = isSelected(row.name);
-                const labelId = `enhanced-table-checkbox-${index}`;
+              <TableBody>
+                {products?.map((row, index) => {
+                  const isItemSelected = isSelected(row.name);
+                  const labelId = `enhanced-table-checkbox-${index}`;
 
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.name)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.name}
-                    selected={isItemSelected}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
+                  return (
+                    <TableRow
+                      hover
+                      onClick={(event) => handleClick(event, row.name)}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row.name}
+                      selected={isItemSelected}
+                      sx={{ cursor: "pointer" }}
                     >
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.brand}</TableCell>
-                    <TableCell align="right">{row.quantity}</TableCell>
-                    <TableCell align="right">{row.srp}</TableCell>
-                    <TableCell align="right">{row.selling_price}</TableCell>
-                    <TableCell align="right">
-                      {row.quantity === 0 ? (
-                        <span className="bg-red-800 w-full p-2 rounded font-bold text-white">Out of Stock</span>
-                      ) : (
-                        <span className="bg-green-800 w-full p-2 rounded font-bold text-white">Instock</span>
-                      )}
-                    </TableCell>
-                    <TableCell align="right">
-                      <Tooltip title="Restock">
-                        <IconButton>
-                          <AddIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Edit Product">
-                        <IconButton>
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
-                <TableRow>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          color="primary"
+                          checked={isItemSelected}
+                          inputProps={{
+                            "aria-labelledby": labelId,
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                      >
+                        {row.name}
+                      </TableCell>
+                      <TableCell align="right">{row.brand}</TableCell>
+                      <TableCell align="right">{row.quantity}</TableCell>
+                      <TableCell align="right">{row.srp}</TableCell>
+                      <TableCell align="right">{row.selling_price}</TableCell>
+                      <TableCell align="right">
+                        {row.quantity === 0 ? (
+                          <span className="bg-red-800 w-full p-2 rounded font-bold text-white">
+                            Out of Stock
+                          </span>
+                        ) : (
+                          <span className="bg-green-800 w-full p-2 rounded font-bold text-white">
+                            Instock
+                          </span>
+                        )}
+                      </TableCell>
+                      <TableCell align="right">
+                        <Tooltip title="Restock">
+                          <IconButton>
+                            <AddIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Edit Product">
+                          <IconButton>
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25]}
           component="div"
-          count={products.length}
+          count={products?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

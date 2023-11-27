@@ -10,10 +10,9 @@ import { useCallback } from "react";
 import AddProductModal from "../../components/AddProductModal";
 
 const Products = () => {
-  const { data: products } = hooks.useProductList();
+  const { data: products, isLoading } = hooks.useProductList();
   const [open, setOpen] = React.useState(false);
   const [productsList, setProductsList] = React.useState([]);
-
   const handleOpen = () => {
     setOpen(true);
   };
@@ -46,7 +45,7 @@ const Products = () => {
         </Container>
       </div>
       <div className="m-4 w-full">
-        <InventoryTable data={productsList} />
+        <InventoryTable data={productsList} isLoading={isLoading} />
       </div>
     </>
   );
